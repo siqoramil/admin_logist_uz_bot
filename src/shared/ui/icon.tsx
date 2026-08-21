@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-type IconName = 'users' | 'check' | 'link' | 'bot' | 'search' | 'plus' | 'logout' | 'phone' | 'at' | 'trash' | 'pause' | 'play' | 'refresh'
+type IconName = 'users' | 'check' | 'link' | 'bot' | 'search' | 'plus' | 'logout' | 'phone' | 'at' | 'trash' | 'pause' | 'play' | 'refresh' | 'eye' | 'eyeOff'
 
 const paths: Record<IconName, React.ReactNode> = {
   users: <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></>,
@@ -16,6 +16,8 @@ const paths: Record<IconName, React.ReactNode> = {
   pause: <><path d="M10 4H6v16h4V4ZM18 4h-4v16h4V4Z"/></>,
   play: <><path d="m5 3 14 9-14 9V3z"/></>,
   refresh: <><path d="M20 11a8 8 0 1 0-2.34 5.66L20 19M20 19v-6h-6"/></>,
+  eye: <><path d="M2.06 12.35a1 1 0 0 1 0-.7C3.73 7.6 7.64 5 12 5c4.36 0 8.27 2.6 9.94 6.65a1 1 0 0 1 0 .7C20.27 16.4 16.36 19 12 19c-4.36 0-8.27-2.6-9.94-6.65Z"/><circle cx="12" cy="12" r="3"/></>,
+  eyeOff: <><path d="m3 3 18 18"/><path d="M10.58 10.58a2 2 0 0 0 2.83 2.83M9.88 4.24A10.8 10.8 0 0 1 12 4c4.36 0 8.27 2.6 9.94 6.65a1 1 0 0 1 0 .7 11.4 11.4 0 0 1-2.06 3.25M6.61 6.61a11.5 11.5 0 0 0-4.55 5.04 1 1 0 0 0 0 .7C3.73 16.4 7.64 19 12 19a10.8 10.8 0 0 0 3.12-.46"/></>,
 }
 
 export function Icon({ name, ...props }: { name: IconName } & SVGProps<SVGSVGElement>) {

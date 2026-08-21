@@ -9,6 +9,7 @@ const resources = {
       login: {
         eyebrow: 'Панель управления', title: 'Вход в CRM', description: 'Управляйте пользователями бота и доступами в одном месте.',
         username: 'Логин', password: 'Пароль', submit: 'Войти в панель', loading: 'Проверяем…',
+        showPassword: 'Показать пароль', hidePassword: 'Скрыть пароль',
       },
       dashboard: {
         adminPanel: 'Панель администратора', adminHint: 'Контроль доступов и клиентов бота', administrator: 'Администратор',
@@ -38,6 +39,7 @@ const resources = {
       login: {
         eyebrow: 'Control center', title: 'Sign in to CRM', description: 'Manage bot users and access from one place.',
         username: 'Username', password: 'Password', submit: 'Sign in', loading: 'Checking…',
+        showPassword: 'Show password', hidePassword: 'Hide password',
       },
       dashboard: {
         adminPanel: 'Admin panel', adminHint: 'Bot access and customer control', administrator: 'Administrator',
