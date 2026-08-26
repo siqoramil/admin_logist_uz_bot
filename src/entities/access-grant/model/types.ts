@@ -1,6 +1,6 @@
 export interface AccessGrant {
   readonly id: string
-  readonly username: string
+  readonly username: string | null
   readonly phone: string
   readonly enabled: boolean
   readonly linkedUserId: number | null

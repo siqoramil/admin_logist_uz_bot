@@ -15,7 +15,8 @@ export function AccessActions({ grant, active }: AccessActionsProps) {
   const remove = useDeleteAccess()
 
   const deleteGrant = () => {
-    if (window.confirm(t('actions.deleteConfirm', { username: grant.username }))) remove.mutate(grant.id)
+    const identity = grant.username ? `@${grant.username}` : `+${grant.phone}`
+    if (window.confirm(t('actions.deleteConfirm', { identity }))) remove.mutate(grant.id)
   }
 
   return (

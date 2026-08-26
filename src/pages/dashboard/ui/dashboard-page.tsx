@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { useSessionStore } from '@entities/session'
 import { AddAccessForm, useDashboardStats } from '@features/access-management'
 import { AnalyticsPage } from '@pages/analytics'
+import { ProfilePage } from '@pages/profile'
 import { Icon, LanguageSwitcher } from '@shared/ui'
 import { apiErrorTranslationKey } from '@shared/api'
 import { AccessTable } from '@widgets/access-table'
 import { StatsGrid } from '@widgets/dashboard'
 
-type DashboardView = 'users' | 'analytics'
+type DashboardView = 'users' | 'analytics' | 'profile'
 
 export function DashboardPage() {
   const { t } = useTranslation()
@@ -44,7 +45,7 @@ export function DashboardPage() {
     <div className="min-h-screen bg-canvas lg:grid lg:grid-cols-[248px_1fr]">
       <aside className="hidden min-h-screen border-r border-white/10 bg-ink-950 p-5 text-white lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
         <div className="flex items-center gap-3 px-2 py-2"><div className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-500 font-black">LB</div><div><p className="font-extrabold tracking-[-0.03em]">Logistic Bot</p><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-300">CRM platform</p></div></div>
-        <nav className="mt-10"><p className="px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{t('dashboard.nav')}</p><div className="mt-3 space-y-1.5"><button type="button" onClick={() => setActivePage('users')} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${activePage === 'users' ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white'}`}><Icon name="users" className="h-5 w-5 text-emerald-300" />{t('dashboard.users')}</button><button type="button" onClick={() => setActivePage('analytics')} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${activePage === 'analytics' ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white'}`}><Icon name="chart" className="h-5 w-5 text-emerald-300" />{t('dashboard.analytics')}</button></div></nav>
+        <nav className="mt-10"><p className="px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{t('dashboard.nav')}</p><div className="mt-3 space-y-1.5"><button type="button" onClick={() => setActivePage('users')} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${activePage === 'users' ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white'}`}><Icon name="users" className="h-5 w-5 text-emerald-300" />{t('dashboard.users')}</button><button type="button" onClick={() => setActivePage('analytics')} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${activePage === 'analytics' ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white'}`}><Icon name="chart" className="h-5 w-5 text-emerald-300" />{t('dashboard.analytics')}</button><button type="button" onClick={() => setActivePage('profile')} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold transition ${activePage === 'profile' ? 'bg-white/10 text-white' : 'text-white/55 hover:bg-white/5 hover:text-white'}`}><Icon name="user" className="h-5 w-5 text-emerald-300" />{t('dashboard.profile')}</button></div></nav>
         <div className="mt-auto space-y-3"><LanguageSwitcher dark /><div className="rounded-2xl border border-white/10 bg-white/5 p-4"><p className="text-xs text-white/45">{t('dashboard.systemStatus')}</p><p className="mt-2 flex items-center gap-2 text-sm font-bold"><span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]" />{t('dashboard.online')}</p></div></div>
       </aside>
 
@@ -56,8 +57,8 @@ export function DashboardPage() {
         </header>
 
         <div className="mx-auto max-w-[1500px] p-5 md:p-8">
-          <div className="mb-6 inline-flex rounded-xl border border-slate-200 bg-white p-1 lg:hidden"><button type="button" onClick={() => setActivePage('users')} className={`rounded-lg px-4 py-2 text-sm font-bold ${activePage === 'users' ? 'bg-ink-950 text-white' : 'text-ink-500'}`}>{t('dashboard.users')}</button><button type="button" onClick={() => setActivePage('analytics')} className={`rounded-lg px-4 py-2 text-sm font-bold ${activePage === 'analytics' ? 'bg-ink-950 text-white' : 'text-ink-500'}`}>{t('dashboard.analytics')}</button></div>
-          {activePage === 'users' ? <><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">{t('dashboard.eyebrow')}</p><h1 className="mt-1 text-3xl font-black tracking-[-0.045em] text-ink-950 md:text-4xl">{t('dashboard.title')}</h1><p className="mt-2 text-sm text-ink-500">{t('dashboard.description')}</p></div>{stats.error && <div className="mb-4 rounded-xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700" role="alert">{t(apiErrorTranslationKey(stats.error))}</div>}<StatsGrid stats={stats.data} loading={stats.isLoading} /><div className="mt-6"><AccessTable /></div></> : <AnalyticsPage />}
+          <div className="mb-6 inline-flex rounded-xl border border-slate-200 bg-white p-1 lg:hidden"><button type="button" onClick={() => setActivePage('users')} className={`rounded-lg px-3 py-2 text-sm font-bold ${activePage === 'users' ? 'bg-ink-950 text-white' : 'text-ink-500'}`}>{t('dashboard.users')}</button><button type="button" onClick={() => setActivePage('analytics')} className={`rounded-lg px-3 py-2 text-sm font-bold ${activePage === 'analytics' ? 'bg-ink-950 text-white' : 'text-ink-500'}`}>{t('dashboard.analytics')}</button><button type="button" onClick={() => setActivePage('profile')} className={`rounded-lg px-3 py-2 text-sm font-bold ${activePage === 'profile' ? 'bg-ink-950 text-white' : 'text-ink-500'}`}>{t('dashboard.profile')}</button></div>
+          {activePage === 'users' ? <><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-600">{t('dashboard.eyebrow')}</p><h1 className="mt-1 text-3xl font-black tracking-[-0.045em] text-ink-950 md:text-4xl">{t('dashboard.title')}</h1><p className="mt-2 text-sm text-ink-500">{t('dashboard.description')}</p></div>{stats.error && <div className="mb-4 rounded-xl border border-red-100 bg-red-50 p-4 text-sm font-semibold text-red-700" role="alert">{t(apiErrorTranslationKey(stats.error))}</div>}<StatsGrid stats={stats.data} loading={stats.isLoading} /><div className="mt-6"><AccessTable /></div></> : activePage === 'analytics' ? <AnalyticsPage /> : <ProfilePage />}
         </div>
       </main>
 

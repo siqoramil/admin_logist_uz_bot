@@ -26,7 +26,7 @@ export function AddAccessForm({ onClose }: AddAccessFormProps) {
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    mutation.mutate({ username: `@${username}`, phone: `+998${phone}` }, {
+    mutation.mutate({ username: username ? `@${username}` : null, phone: `+998${phone}` }, {
       onSuccess: () => {
         setUsername('')
         setPhone('')
@@ -49,14 +49,14 @@ export function AddAccessForm({ onClose }: AddAccessFormProps) {
           <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/70"><Icon name="at" className="h-4 w-4" />{t('form.username')}</span>
           <div className="flex h-12 items-center rounded-xl border border-white/10 bg-white/10 transition focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-400/10">
             <span className="pl-4 text-white/75">@</span>
-            <input value={username} onChange={(event) => setUsername(event.target.value.replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 32))} className="h-full min-w-0 flex-1 bg-transparent px-1 pr-4 text-white outline-none placeholder:text-white/35" placeholder="username" autoFocus minLength={5} maxLength={32} pattern="[A-Za-z0-9_]{5,32}" required />
+            <input value={username} onChange={(event) => setUsername(event.target.value.replace(/^@/, '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 32))} className="h-full min-w-0 flex-1 bg-transparent px-1 pr-4 text-white outline-none placeholder:text-white/35" placeholder={t('form.usernamePlaceholder')} minLength={5} maxLength={32} pattern="[A-Za-z0-9_]{5,32}" />
           </div>
         </label>
         <label className="block">
           <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/70"><Icon name="phone" className="h-4 w-4" />{t('form.phone')}</span>
           <div className="flex h-12 items-center rounded-xl border border-white/10 bg-white/10 transition focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-400/10">
             <span className="pl-4 text-white/75">+998</span>
-            <input value={formatUzPhone(phone)} onChange={(event) => setPhone(localPhoneDigits(event.target.value))} className="h-full min-w-0 flex-1 bg-transparent px-2 pr-4 text-white outline-none placeholder:text-white/35" placeholder="99 123 11 22" inputMode="numeric" autoComplete="tel-national" pattern="\d{2} \d{3} \d{2} \d{2}" title="99 123 11 22" required />
+            <input value={formatUzPhone(phone)} onChange={(event) => setPhone(localPhoneDigits(event.target.value))} className="h-full min-w-0 flex-1 bg-transparent px-2 pr-4 text-white outline-none placeholder:text-white/35" placeholder="99 123 11 22" inputMode="numeric" autoComplete="tel-national" pattern="\d{2} \d{3} \d{2} \d{2}" title="99 123 11 22" autoFocus required />
           </div>
         </label>
         <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs leading-5 text-white/55">{t('form.hint')}</p>

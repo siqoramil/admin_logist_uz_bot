@@ -14,6 +14,9 @@ export type ApiErrorCode =
   | 'request-too-large'
   | 'validation-error'
   | 'duplicate-access'
+  | 'invalid-admin-username'
+  | 'invalid-current-password'
+  | 'weak-password'
   | 'network-error'
   | 'invalid-response'
   | 'server-error'
@@ -24,6 +27,7 @@ const API_ERROR_CODES = new Set<ApiErrorCode>([
   'invalid-username', 'invalid-phone', 'username-in-use', 'phone-in-use',
   'invalid-enabled', 'access-not-found', 'endpoint-not-found', 'invalid-json',
   'request-too-large', 'validation-error', 'duplicate-access', 'network-error',
+  'invalid-admin-username', 'invalid-current-password', 'weak-password',
   'invalid-response', 'server-error', 'unknown',
 ])
 
