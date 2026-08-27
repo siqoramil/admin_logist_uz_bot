@@ -74,7 +74,7 @@ export function AccessTable() {
     return (query.data?.grants ?? []).filter((grant) => {
       const active = grant.enabled && new Date(grant.expiresAt).getTime() > currentTime
       const matchesStatus = filter === 'all' || (filter === 'active' ? active : !active)
-      const matchesSearch = !needle || grant.username?.includes(needle) || grant.phone.includes(needle) || String(grant.linkedUserId ?? '').includes(needle)
+      const matchesSearch = !needle || grant.fullName?.toLowerCase().includes(needle) || grant.username?.includes(needle) || grant.phone.includes(needle) || String(grant.linkedUserId ?? '').includes(needle)
       return matchesStatus && matchesSearch
     })
   }, [currentTime, filter, query.data, search])
@@ -134,12 +134,13 @@ export function AccessTable() {
         </div>
       ) : (
         <div>
-          <div className="overflow-x-auto"><table className="w-full min-w-[1040px] border-collapse text-left">
-            <thead><tr className="bg-slate-50/80 text-xs font-bold uppercase tracking-[0.08em] text-ink-500"><th className="px-5 py-3">{t('table.username')}</th><th className="px-5 py-3">{t('table.phone')}</th><th className="px-5 py-3">{t('table.verification')}</th><th className="px-5 py-3">{t('table.status')}</th><th className="px-5 py-3">{t('table.created')}</th><th className="px-5 py-3">{t('table.expires')}</th><th className="px-5 py-3 text-right">{t('table.actions')}</th></tr></thead>
+          <div className="overflow-x-auto"><table className="w-full min-w-[1180px] border-collapse text-left">
+            <thead><tr className="bg-slate-50/80 text-xs font-bold uppercase tracking-[0.08em] text-ink-500"><th className="px-5 py-3">{t('table.fullName')}</th><th className="px-5 py-3">{t('table.username')}</th><th className="px-5 py-3">{t('table.phone')}</th><th className="px-5 py-3">{t('table.verification')}</th><th className="px-5 py-3">{t('table.status')}</th><th className="px-5 py-3">{t('table.created')}</th><th className="px-5 py-3">{t('table.expires')}</th><th className="px-5 py-3 text-right">{t('table.actions')}</th></tr></thead>
             <tbody className="divide-y divide-slate-100">
               {visibleRows.map((grant) => {
                 const active = grant.enabled && new Date(grant.expiresAt).getTime() > currentTime
                 return <tr key={grant.id} className="transition hover:bg-slate-50/70">
+                  <td className="px-5 py-4"><p className="max-w-48 truncate font-extrabold text-ink-950" title={grant.fullName ?? undefined}>{grant.fullName ?? '—'}</p></td>
                   <td className="px-5 py-4"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-xl bg-blue-50 text-blue-700"><Icon name={grant.username ? 'at' : 'phone'} className="h-4 w-4" /></div><div><p className="font-extrabold text-ink-950">{grant.username ? `@${grant.username}` : t('table.phoneOnly')}</p><p className="text-xs text-ink-500">ID: {grant.id.slice(-6).toUpperCase()}</p></div></div></td>
                   <td className="px-5 py-4"><p className="text-sm font-bold text-ink-700">+{grant.phone}</p></td>
                   <td className="px-5 py-4">{grant.linkedUserId ? <div><p className="text-sm font-bold text-emerald-700">{t('table.verified')}</p><p className="text-xs text-ink-500">{t('table.telegramId', { id: grant.linkedUserId })}</p></div> : <span className="text-sm text-ink-500">{t('table.waiting')}</span>}</td>

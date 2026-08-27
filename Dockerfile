@@ -4,7 +4,7 @@ WORKDIR /app
 RUN corepack enable
 COPY package.json yarn.lock ./
 RUN --mount=type=cache,id=logistic-admin-yarn,target=/usr/local/share/.cache/yarn,sharing=locked \
-    yarn install --frozen-lockfile --ignore-platform
+    yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 

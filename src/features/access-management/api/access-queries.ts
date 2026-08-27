@@ -9,8 +9,9 @@ type AccessPayload<TFields extends keyof AccessGrant> = Pick<AccessGrant, TField
 type AccessListResponse = ApiEntityResponse<'grants', AccessGrant[]>
 type AccessGrantResponse = ApiEntityResponse<'grant', AccessGrant>
 type DeleteAccessResponse = { ok: true }
-type AddAccessPayload = AccessPayload<'username' | 'phone'>
+type AddAccessPayload = AccessPayload<'fullName' | 'username' | 'phone'>
 type ToggleAccessPayload = AccessPayload<'id' | 'enabled'>
+type UpdateFullNamePayload = AccessPayload<'id' | 'fullName'>
 
 const queryKeys = {
   access: ['access-grants'] as const,
@@ -84,6 +85,19 @@ export const useToggleAccess = () => {
       apiRequest<AccessGrantResponse, Pick<ToggleAccessPayload, 'enabled'>>(`/access/${id}`, auth, {
         method: 'PATCH',
         body: { enabled },
+      }),
+    onSuccess: invalidate,
+  })
+}
+
+export const useUpdateAccessFullName = () => {
+  const auth = useAuthHeader()
+  const invalidate = useInvalidateDashboard()
+  return useMutation<AccessGrantResponse, ApiError, UpdateFullNamePayload>({
+    mutationFn: ({ id, fullName }) =>
+      apiRequest<AccessGrantResponse, Pick<UpdateFullNamePayload, 'fullName'>>(`/access/${id}`, auth, {
+        method: 'PATCH',
+        body: { fullName },
       }),
     onSuccess: invalidate,
   })

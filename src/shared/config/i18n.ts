@@ -5,7 +5,7 @@ const resources = {
   ru: {
     translation: {
       language: { ru: 'RU', en: 'EN' },
-      common: { refresh: 'Обновить', logout: 'Выйти', close: 'Закрыть', all: 'Все', active: 'Активные', blocked: 'Заблокированные' },
+      common: { refresh: 'Обновить', logout: 'Выйти', close: 'Закрыть', cancel: 'Отмена', all: 'Все', active: 'Активные', blocked: 'Заблокированные' },
       login: {
         eyebrow: 'Панель управления', title: 'Вход в CRM', description: 'Управляйте пользователями бота и доступами в одном месте.',
         username: 'Логин', password: 'Пароль', submit: 'Войти в панель', loading: 'Проверяем…',
@@ -18,17 +18,17 @@ const resources = {
       },
       stats: { total: 'Всего доступов', active: 'Активные доступы', linked: 'Подтверждено в Telegram', subscribers: 'Клиенты бота' },
       form: {
-        eyebrow: 'Новый клиент', title: 'Добавить доступ', username: 'Telegram username (необязательно)', usernamePlaceholder: 'если есть', phone: 'Номер телефона',
+        eyebrow: 'Новый клиент', title: 'Добавить доступ', fullName: 'Имя и фамилия', fullNamePlaceholder: 'Например, Иван Иванов', username: 'Telegram username (необязательно)', usernamePlaceholder: 'если есть', phone: 'Номер телефона',
         hint: 'После разрешения клиент нажмёт /start и отправит свой контакт. Без разрешения администратора бот не откроется.', submit: 'Разрешить доступ', loading: 'Добавляем…', success: 'Доступ успешно добавлен',
       },
       table: {
         title: 'Список доступов', description: 'Клиент получает доступ только после разрешения администратора', search: 'Поиск…',
-        username: 'Username', phone: 'Телефон', verification: 'Проверка', status: 'Статус', created: 'Добавлен', expires: 'Действует до', actions: 'Действия',
+        fullName: 'Имя клиента', username: 'Username', phone: 'Телефон', verification: 'Проверка', status: 'Статус', created: 'Добавлен', expires: 'Действует до', actions: 'Действия',
         verified: 'Подтверждено', telegramId: 'Telegram ID: {{id}}', waiting: 'Ожидается /start', phoneOnly: 'Только по номеру', active: 'Активен', blocked: 'Заблокирован',
         emptyTitle: 'Доступы не найдены', emptyHint: 'Добавьте нового клиента с помощью кнопки «+».',
         paginationRange: 'Показано {{from}}–{{to}} из {{total}}', paginationLabel: 'Страницы списка доступов', previousPage: 'Предыдущая страница', nextPage: 'Следующая страница',
       },
-      actions: { block: 'Заблокировать', activate: 'Активировать', delete: 'Удалить', deleteConfirm: 'Удалить доступ для {{identity}}?' },
+      actions: { edit: 'Редактирование', editFullName: 'Изменить имя клиента', save: 'Сохранить', saving: 'Сохраняем…', block: 'Заблокировать', activate: 'Активировать', delete: 'Удалить', deleteConfirm: 'Удалить доступ для {{identity}}?' },
       analytics: {
         eyebrow: 'Финансы', title: 'Аналитика доходов', description: 'Доход рассчитывается по тарифу 100 000 сум за один месяц доступа.',
         currency: 'сум', currentMonth: 'Доход за текущий месяц', recurring: 'Ожидаемый доход в месяц', activeSubscriptions: 'Активные подписки', totalRevenue: 'Общий доход',
@@ -47,7 +47,8 @@ const resources = {
           'invalid-credentials': 'Неверный логин или пароль. Проверьте данные и попробуйте снова.',
           'origin-forbidden': 'Сервер отклонил адрес панели. Проверьте настройку ADMIN_ORIGIN.',
           'admin-build-missing': 'Сервер не нашёл сборку админ-панели. Администратору нужно выполнить сборку заново.',
-          'missing-fields': 'Номер телефона обязателен. Введите его в правильном формате.',
+          'missing-fields': 'Имя клиента и номер телефона обязательны.',
+          'invalid-full-name': 'Имя и фамилия должны содержать от 2 до 100 символов.',
           'invalid-username': 'Неверный Telegram username. Нужно от 5 до 32 латинских букв, цифр или символов подчёркивания.',
           'invalid-phone': 'Неверный номер. Введите 9 цифр после +998 в формате 99 123 11 22.',
           'username-in-use': 'Этот username уже привязан к другому номеру. Укажите ранее сохранённый номер или удалите старую запись.',
@@ -73,7 +74,7 @@ const resources = {
   en: {
     translation: {
       language: { ru: 'RU', en: 'EN' },
-      common: { refresh: 'Refresh', logout: 'Sign out', close: 'Close', all: 'All', active: 'Active', blocked: 'Blocked' },
+      common: { refresh: 'Refresh', logout: 'Sign out', close: 'Close', cancel: 'Cancel', all: 'All', active: 'Active', blocked: 'Blocked' },
       login: {
         eyebrow: 'Control center', title: 'Sign in to CRM', description: 'Manage bot users and access from one place.',
         username: 'Username', password: 'Password', submit: 'Sign in', loading: 'Checking…',
@@ -86,17 +87,17 @@ const resources = {
       },
       stats: { total: 'Total access', active: 'Active access', linked: 'Telegram verified', subscribers: 'Bot customers' },
       form: {
-        eyebrow: 'New customer', title: 'Add access', username: 'Telegram username (optional)', usernamePlaceholder: 'if available', phone: 'Phone number',
+        eyebrow: 'New customer', title: 'Add access', fullName: 'Full name', fullNamePlaceholder: 'For example, John Smith', username: 'Telegram username (optional)', usernamePlaceholder: 'if available', phone: 'Phone number',
         hint: 'After approval, the customer sends /start and shares their contact. The bot stays locked without admin approval.', submit: 'Grant access', loading: 'Adding…', success: 'Access added successfully',
       },
       table: {
         title: 'Access list', description: 'Customers get access only after administrator approval', search: 'Search…',
-        username: 'Username', phone: 'Phone', verification: 'Verification', status: 'Status', created: 'Created', expires: 'Active until', actions: 'Actions',
+        fullName: 'Customer name', username: 'Username', phone: 'Phone', verification: 'Verification', status: 'Status', created: 'Created', expires: 'Active until', actions: 'Actions',
         verified: 'Verified', telegramId: 'Telegram ID: {{id}}', waiting: 'Waiting for /start', phoneOnly: 'Phone only', active: 'Active', blocked: 'Blocked',
         emptyTitle: 'No access records found', emptyHint: 'Add a new customer using the “+” button.',
         paginationRange: 'Showing {{from}}–{{to}} of {{total}}', paginationLabel: 'Access list pages', previousPage: 'Previous page', nextPage: 'Next page',
       },
-      actions: { block: 'Block', activate: 'Activate', delete: 'Delete', deleteConfirm: 'Delete access for {{identity}}?' },
+      actions: { edit: 'Edit', editFullName: 'Edit customer name', save: 'Save', saving: 'Saving…', block: 'Block', activate: 'Activate', delete: 'Delete', deleteConfirm: 'Delete access for {{identity}}?' },
       analytics: {
         eyebrow: 'Finance', title: 'Revenue analytics', description: 'Revenue is calculated at 100,000 UZS for one month of access.',
         currency: 'UZS', currentMonth: 'Revenue this month', recurring: 'Expected monthly revenue', activeSubscriptions: 'Active subscriptions', totalRevenue: 'Total revenue',
@@ -115,7 +116,8 @@ const resources = {
           'invalid-credentials': 'The username or password is incorrect. Check both values and try again.',
           'origin-forbidden': 'The server rejected the admin panel origin. Check the ADMIN_ORIGIN setting.',
           'admin-build-missing': 'The server could not find the admin build. The administrator must rebuild the panel.',
-          'missing-fields': 'A phone number is required. Enter it in the correct format.',
+          'missing-fields': 'Customer name and phone number are required.',
+          'invalid-full-name': 'The full name must contain between 2 and 100 characters.',
           'invalid-username': 'Invalid Telegram username. Use 5–32 Latin letters, digits, or underscores.',
           'invalid-phone': 'Invalid phone number. Enter 9 digits after +998 in the format 99 123 11 22.',
           'username-in-use': 'This username is already linked to another number. Use the saved number or remove the old record.',

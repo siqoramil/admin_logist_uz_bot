@@ -20,14 +20,16 @@ const localPhoneDigits = (value: string): string => {
 
 export function AddAccessForm({ onClose }: AddAccessFormProps) {
   const { t } = useTranslation()
+  const [fullName, setFullName] = useState('')
   const [username, setUsername] = useState('')
   const [phone, setPhone] = useState('')
   const mutation = useAddAccess()
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    mutation.mutate({ username: username ? `@${username}` : null, phone: `+998${phone}` }, {
+    mutation.mutate({ fullName, username: username ? `@${username}` : null, phone: `+998${phone}` }, {
       onSuccess: () => {
+        setFullName('')
         setUsername('')
         setPhone('')
         onClose()
@@ -46,6 +48,10 @@ export function AddAccessForm({ onClose }: AddAccessFormProps) {
       </div>
       <form onSubmit={submit} className="space-y-4">
         <label className="block">
+          <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/70"><Icon name="user" className="h-4 w-4" />{t('form.fullName')}</span>
+          <input value={fullName} onChange={(event) => setFullName(event.target.value.slice(0, 100))} className="h-12 w-full rounded-xl border border-white/10 bg-white/10 px-4 text-white outline-none transition placeholder:text-white/35 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10" placeholder={t('form.fullNamePlaceholder')} autoComplete="name" minLength={2} maxLength={100} autoFocus required />
+        </label>
+        <label className="block">
           <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/70"><Icon name="at" className="h-4 w-4" />{t('form.username')}</span>
           <div className="flex h-12 items-center rounded-xl border border-white/10 bg-white/10 transition focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-400/10">
             <span className="pl-4 text-white/75">@</span>
@@ -56,7 +62,7 @@ export function AddAccessForm({ onClose }: AddAccessFormProps) {
           <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-white/70"><Icon name="phone" className="h-4 w-4" />{t('form.phone')}</span>
           <div className="flex h-12 items-center rounded-xl border border-white/10 bg-white/10 transition focus-within:border-emerald-400 focus-within:ring-4 focus-within:ring-emerald-400/10">
             <span className="pl-4 text-white/75">+998</span>
-            <input value={formatUzPhone(phone)} onChange={(event) => setPhone(localPhoneDigits(event.target.value))} className="h-full min-w-0 flex-1 bg-transparent px-2 pr-4 text-white outline-none placeholder:text-white/35" placeholder="99 123 11 22" inputMode="numeric" autoComplete="tel-national" pattern="\d{2} \d{3} \d{2} \d{2}" title="99 123 11 22" autoFocus required />
+            <input value={formatUzPhone(phone)} onChange={(event) => setPhone(localPhoneDigits(event.target.value))} className="h-full min-w-0 flex-1 bg-transparent px-2 pr-4 text-white outline-none placeholder:text-white/35" placeholder="99 123 11 22" inputMode="numeric" autoComplete="tel-national" pattern="\d{2} \d{3} \d{2} \d{2}" title="99 123 11 22" required />
           </div>
         </label>
         <p className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs leading-5 text-white/55">{t('form.hint')}</p>

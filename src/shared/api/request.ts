@@ -3,6 +3,7 @@ export type ApiErrorCode =
   | 'origin-forbidden'
   | 'admin-build-missing'
   | 'missing-fields'
+  | 'invalid-full-name'
   | 'invalid-username'
   | 'invalid-phone'
   | 'username-in-use'
@@ -24,7 +25,7 @@ export type ApiErrorCode =
 
 const API_ERROR_CODES = new Set<ApiErrorCode>([
   'invalid-credentials', 'origin-forbidden', 'admin-build-missing', 'missing-fields',
-  'invalid-username', 'invalid-phone', 'username-in-use', 'phone-in-use',
+  'invalid-full-name', 'invalid-username', 'invalid-phone', 'username-in-use', 'phone-in-use',
   'invalid-enabled', 'access-not-found', 'endpoint-not-found', 'invalid-json',
   'request-too-large', 'validation-error', 'duplicate-access', 'network-error',
   'invalid-admin-username', 'invalid-current-password', 'weak-password',
